@@ -9,6 +9,9 @@
         <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     </head>
     <body>
+        <!-- Opening-name animation -->
+        <div id="mymuna-rain" class="mymuna-rain" aria-hidden="true"></div>
+
         <div id="wrapper">
             <div class="flag__birthday">
                 <img src="./images/1.png" alt="" width="350" class="flag__left">
@@ -47,6 +50,10 @@
                             <i class="fa-regular fa-envelope"></i>
                         </button>
                     </div>
+                    <button id="music__btn" class="music__btn" type="button" aria-label="Play birthday song">
+                        <i class="fa-solid fa-music"></i>
+                        <span>Play Song</span>
+                    </button>
                 </div>
                 <div class="right">
                     <div class="box__account">
@@ -55,7 +62,7 @@
                         </div>
                         <div class="name">
                             <i class="fa-solid fa-heart"></i>
-                            <span>Cutie💖</span>
+                            <span>Mymuna💖</span>
                             <i class="fa-solid fa-heart"></i>
                         </div>
                         <div class="balloon_one">
@@ -143,8 +150,51 @@
 
    
 
+        <audio id="birthday__song" preload="metadata" loop>
+            <source src="./song.mp3" type="audio/mpeg">
+        </audio>
+
         <script>
-            let datetxt = "01 JAN 2007";
+            // Elegant opening "Mymuna" rain
+            const mymunaRain = document.querySelector("#mymuna-rain");
+            const mymunaCount = 22;
+            for (let i = 0; i < mymunaCount; i++) {
+                const item = document.createElement("span");
+                item.className = "mymuna-drop";
+                item.textContent = "Mymuna";
+                item.style.setProperty("--x", `${Math.random() * 100}%`);
+                item.style.setProperty("--delay", `${(i * 0.14).toFixed(2)}s`);
+                item.style.setProperty("--duration", `${(4.8 + Math.random() * 1.8).toFixed(2)}s`);
+                item.style.setProperty("--size", `${0.95 + Math.random() * 0.65}rem`);
+                item.style.setProperty("--rotate", `${-18 + Math.random() * 36}deg`);
+                item.style.setProperty("--drift", `${-55 + Math.random() * 110}px`);
+                mymunaRain.appendChild(item);
+            }
+
+            const birthdaySong = document.querySelector("#birthday__song");
+            const musicBtn = document.querySelector("#music__btn");
+            const musicIcon = musicBtn.querySelector("i");
+            const musicText = musicBtn.querySelector("span");
+
+            musicBtn.addEventListener("click", async () => {
+                try {
+                    if (birthdaySong.paused) {
+                        await birthdaySong.play();
+                        musicIcon.className = "fa-solid fa-pause";
+                        musicText.textContent = "Pause Song";
+                        musicBtn.classList.add("playing");
+                    } else {
+                        birthdaySong.pause();
+                        musicIcon.className = "fa-solid fa-music";
+                        musicText.textContent = "Play Song";
+                        musicBtn.classList.remove("playing");
+                    }
+                } catch (error) {
+                    musicText.textContent = "Tap to Play";
+                }
+            });
+
+            let datetxt = "12 SEPTEMBER";
             let datatxtletter = "My love. You are a very special girl. I always silently thank you for coming into my life. Today, I wish you all the best, lots of health, and lots of joy. I always hope we will celebrate many more birthdays like this together. Happy birthday to you love and  I love you 💕";
             let titleLetter = "To you";
             let charArrDate = datetxt.split('');

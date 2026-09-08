@@ -800,3 +800,103 @@ body {
 
 
 }
+
+
+/* =========================
+   MYMUNA OPENING ANIMATION
+   ========================= */
+.mymuna-rain{
+    position: fixed;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 50;
+}
+.mymuna-drop{
+    position: absolute;
+    left: var(--x);
+    top: -12vh;
+    font-family: "Dancing Script", cursive;
+    font-size: var(--size);
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: #ff5f73;
+    text-shadow:
+        0 0 8px rgba(255,255,255,.95),
+        0 3px 12px rgba(255,95,115,.28);
+    white-space: nowrap;
+    opacity: 0;
+    filter: blur(0.2px);
+    transform: translate3d(0,0,0) rotate(var(--rotate)) scale(.75);
+    animation: mymunaFall var(--duration) cubic-bezier(.18,.72,.22,1) var(--delay) forwards;
+}
+@keyframes mymunaFall{
+    0%{
+        opacity: 0;
+        transform: translate3d(0,-12vh,0) rotate(var(--rotate)) scale(.72);
+    }
+    8%{
+        opacity: .95;
+    }
+    45%{
+        opacity: 1;
+        transform: translate3d(var(--drift),45vh,0) rotate(calc(var(--rotate) * -0.45)) scale(1);
+    }
+    78%{
+        opacity: .72;
+        transform: translate3d(calc(var(--drift) * -0.45),82vh,0) rotate(calc(var(--rotate) * 0.35)) scale(.94);
+    }
+    100%{
+        opacity: 0;
+        transform: translate3d(var(--drift),112vh,0) rotate(calc(var(--rotate) * -0.2)) scale(.8);
+    }
+}
+
+/* =========================
+   MUSIC BUTTON
+   ========================= */
+.music__btn{
+    position: fixed;
+    left: 50%;
+    bottom: 18px;
+    transform: translateX(-50%);
+    z-index: 45;
+    border: 2px solid var(--color-black);
+    border-radius: 999px;
+    padding: 9px 17px;
+    min-width: 145px;
+    background: rgba(255,120,130,.96);
+    color: var(--color-black);
+    font-family: "Sriracha", cursive;
+    font-size: .95rem;
+    cursor: pointer;
+    box-shadow: 0 8px 22px rgba(0,0,0,.16);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    transition: transform .25s ease, box-shadow .25s ease, background-color .25s ease;
+}
+.music__btn i{
+    margin-right: 7px;
+}
+.music__btn:hover{
+    transform: translateX(-50%) translateY(-2px) scale(1.03);
+    box-shadow: 0 11px 28px rgba(0,0,0,.2);
+}
+.music__btn.playing{
+    animation: musicPulse 1.35s ease-in-out infinite;
+}
+@keyframes musicPulse{
+    50%{ box-shadow: 0 0 0 8px rgba(255,120,130,.14), 0 11px 28px rgba(0,0,0,.2); }
+}
+
+@media screen and (max-width: 658px){
+    .mymuna-drop{
+        font-size: calc(var(--size) * .92);
+    }
+    .music__btn{
+        bottom: 14px;
+        padding: 8px 15px;
+        min-width: 138px;
+        font-size: .9rem;
+    }
+}
